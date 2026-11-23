@@ -20,6 +20,12 @@ public class RoleModel extends BaseModel<RoleBean> {
         ResultSet rs = null;
 
         long pk = 0;
+        
+        RoleBean existBean = findByName(bean.getName());
+        
+        if(existBean != null) {
+        	throw new DuplicateRecordException("Role name already exist");
+        }
 
         try {
             conn = JDBCDataSource.getConnection();

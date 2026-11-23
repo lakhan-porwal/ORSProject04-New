@@ -24,7 +24,7 @@ public class FacultyModel extends BaseModel<FacultyBean> {
 
 		if (existBean != null) {
 			throw new DuplicateRecordException("Faculty already exists");
-		}
+		}	
 
 		CollegeModel cmodel = new CollegeModel();
 		CollegeBean cbean = cmodel.findByPK(bean.getCollegeId());
