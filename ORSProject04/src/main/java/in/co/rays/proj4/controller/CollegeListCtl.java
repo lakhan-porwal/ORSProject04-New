@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 @WebServlet("CollegeListCtl")
-public class CollegeListCtl extends BaseListClt<CollegeBean, CollegeModel> {
+public class CollegeListCtl extends BaseListCtl<CollegeBean, CollegeModel> {
 
 	@Override
 	public CollegeBean populateBean(HttpServletRequest request) {

@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 @WebServlet("RoleListCtl")
-public class RoleListCtl extends BaseListClt<RoleBean, RoleModel> {
+public class RoleListCtl extends BaseListCtl<RoleBean, RoleModel> {
 
 	@Override
 	public RoleBean populateBean(HttpServletRequest request) {

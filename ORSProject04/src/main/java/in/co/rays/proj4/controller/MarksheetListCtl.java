@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 @WebServlet("MarksheetListCtl")
-public class MarksheetListCtl extends BaseListClt<MarksheetBean, MarksheetModel> {
+public class MarksheetListCtl extends BaseListCtl<MarksheetBean, MarksheetModel> {
 
 	@Override
 	public MarksheetBean populateBean(HttpServletRequest request) {
