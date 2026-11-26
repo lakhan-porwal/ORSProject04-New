@@ -5,7 +5,7 @@ import in.co.rays.proj4.model.MarksheetModel;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
-@WebServlet("MarksheetListCtl")
+@WebServlet("/MarksheetListCtl")
 public class MarksheetListCtl extends BaseListCtl<MarksheetBean, MarksheetModel> {
 
 	@Override
@@ -15,7 +15,7 @@ public class MarksheetListCtl extends BaseListCtl<MarksheetBean, MarksheetModel>
 
 	@Override
 	protected String getView() {
-		return ORSView.MARKSHEET_LIST_CTL;
+		return ORSView.MARKSHEET_LIST_VIEW;
 	}
 
 	@Override

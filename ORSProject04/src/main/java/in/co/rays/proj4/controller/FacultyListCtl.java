@@ -5,7 +5,7 @@ import in.co.rays.proj4.model.FacultyModel;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
-@WebServlet("FacultyListCtl")
+@WebServlet("/FacultyListCtl")
 public class FacultyListCtl extends BaseListCtl<FacultyBean, FacultyModel> {
 
 	@Override
@@ -16,7 +16,7 @@ public class FacultyListCtl extends BaseListCtl<FacultyBean, FacultyModel> {
 
 	@Override
 	protected String getView() {
-		return ORSView.FACULTY_LIST_CTL;
+		return ORSView.FACULTY_LIST_VIEW;
 	}
 
 	protected FacultyModel getModel() {

@@ -5,7 +5,7 @@ import in.co.rays.proj4.model.SubjectModel;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
-@WebServlet("SubjectListCtl")
+@WebServlet("/SubjectListCtl")
 public class SubjectListCtl extends BaseListCtl<SubjectBean, SubjectModel> {
 
 	@Override
@@ -15,7 +15,7 @@ public class SubjectListCtl extends BaseListCtl<SubjectBean, SubjectModel> {
 
 	@Override
 	protected String getView() {
-		return ORSView.SUBJECT_LIST_CTL;
+		return ORSView.SUBJECT_LIST_VIEW;
 	}
 
 	@Override

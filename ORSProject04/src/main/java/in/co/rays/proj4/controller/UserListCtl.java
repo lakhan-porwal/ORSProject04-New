@@ -5,7 +5,7 @@ import in.co.rays.proj4.model.UserModel;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
-@WebServlet("UserListCtl")
+@WebServlet("/UserListCtl")
 public class UserListCtl extends BaseListCtl<UserBean, UserModel> {
 
 	@Override
@@ -15,7 +15,7 @@ public class UserListCtl extends BaseListCtl<UserBean, UserModel> {
 
 	@Override
 	protected String getView() {
-		return ORSView.USER_LIST_CTL;
+		return ORSView.USER_LIST_VIEW;
 	}
 
 	@Override

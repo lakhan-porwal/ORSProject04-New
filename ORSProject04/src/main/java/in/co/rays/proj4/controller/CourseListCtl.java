@@ -5,7 +5,7 @@ import in.co.rays.proj4.model.CourseModel;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
-@WebServlet("CourseListCtl")
+@WebServlet("/CourseListCtl")
 public class CourseListCtl extends BaseListCtl<CourseBean, CourseModel> {
 
 	@Override
@@ -15,7 +15,7 @@ public class CourseListCtl extends BaseListCtl<CourseBean, CourseModel> {
 
 	@Override
 	protected String getView() {
-		return ORSView.COURSE_LIST_CTL;
+		return ORSView.COURSE_LIST_VIEW;
 	}
 
 	protected CourseModel getModel() {

@@ -4,9 +4,12 @@ import java.io.IOException;
 
 import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.UserBean;
+import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.BaseModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
+import in.co.rays.proj4.util.ServletUtility;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,12 +36,12 @@ public abstract class BaseCtl<B extends BaseBean, M extends BaseModel> extends H
 	public static final String MSG_SUCCESS = "success";
 	public static final String MSG_ERROR = "error";
 
-	// This method for check input data enter by user.
+	// This method use for check input data enter by user.
 	public boolean validate(HttpServletRequest request) {
 		return true;
 	}
 
-	// This method for get data from view by using
+	// This method use for get data from view by using
 	// request.getParameter("ParameterName") and set into bean
 	public B populateBean(HttpServletRequest request) {
 		return null;
@@ -82,16 +85,48 @@ public abstract class BaseCtl<B extends BaseBean, M extends BaseModel> extends H
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		ServletUtility.forward(getView(), request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		M model = getModel();
+		B bean = populateBean(request);
+
+		try {
+
+			model.add(bean);
+
+			ServletUtility.setSuccessMessage("Record saved Successfully", request);
+
+		} catch (DuplicateRecordException e) {
+
+			ServletUtility.setErrorMessage("Record already exist", request);
+
+		} catch (ApplicationException e) {
+
+			e.printStackTrace();
+
+			ServletUtility.setErrorMessage(e.getMessage(), request);
+		}
+
+		ServletUtility.forward(getView(), request, response);
 	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		if (request.getMethod().equalsIgnoreCase("POST")) {
+			if (validate(request) == false) {
+				ServletUtility.forward(getView(), request, response);
+				return;
+			}
+
+		}
 
 		super.service(request, response);
 	}
