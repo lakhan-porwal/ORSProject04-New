@@ -40,7 +40,7 @@ public class CollegeCtl extends BaseCtl<CollegeBean, CollegeModel> {
 			request.setAttribute("phoneNo", "phoneNo is required");
 		}
 
-		return super.validate(request);
+		return pass;
 	}
 
 	@Override

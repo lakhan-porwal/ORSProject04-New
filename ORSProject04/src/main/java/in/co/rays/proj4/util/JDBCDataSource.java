@@ -1,3 +1,4 @@
+
 package in.co.rays.proj4.util;
 
 import java.sql.Connection;
@@ -8,72 +9,74 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public final class JDBCDataSource {
 
-	private static JDBCDataSource jdbc = null;
-	private static ComboPooledDataSource cpds = null;
-	private static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.proj4.bundle.System");
+    private static JDBCDataSource jdbc = null;
+    private static ComboPooledDataSource cpds = null;
 
-	private JDBCDataSource() {
+    private static ResourceBundle rb = ResourceBundle
+            .getBundle("in.co.rays.proj4.bundle.System");
 
-		cpds = new ComboPooledDataSource();
+    private JDBCDataSource() {
 
-		try {
-			cpds.setDriverClass(rb.getString("driver"));
-			cpds.setJdbcUrl(rb.getString("url"));
-			cpds.setUser(rb.getString("username"));
-			cpds.setPassword(rb.getString("password"));
-			cpds.setMaxPoolSize(30);
-			cpds.setMinPoolSize(5);
-			cpds.setAcquireIncrement(5);
-			cpds.setInitialPoolSize(5);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        cpds = new ComboPooledDataSource();
 
-	}
+        try {
+            cpds.setDriverClass(rb.getString("driver"));
+            cpds.setJdbcUrl(rb.getString("url"));
+            cpds.setUser(rb.getString("username"));
+            cpds.setPassword(rb.getString("password"));
 
-	private static JDBCDataSource getInstance() {
+            cpds.setMaxPoolSize(30);
+            cpds.setMinPoolSize(5);
+            cpds.setAcquireIncrement(5);
+            cpds.setInitialPoolSize(5);
 
-		if (jdbc == null) {
-			jdbc = new JDBCDataSource();
-			return jdbc;
-		}
-		return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	}
+    private static JDBCDataSource getInstance() {
 
-	public static Connection getConnection() {
+        if (jdbc == null) {
+            jdbc = new JDBCDataSource();
+        }
 
-		try {
-			return getInstance().cpds.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+        return jdbc;
+    }
 
-	}
+    public static Connection getConnection() {
 
-	public static void closeConnection(Connection conn) {
+        try {
+            return getInstance().cpds.getConnection();
 
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-	}
+        return null;
+    }
 
-	public static void trnRollBack(Connection conn) {
+    public static void closeConnection(Connection conn) {
 
-		if (conn != null) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+        if (conn != null) {
+            try {
+                conn.close();
 
-	}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    public static void trnRollBack(Connection conn) {
+
+        if (conn != null) {
+            try {
+                conn.rollback();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

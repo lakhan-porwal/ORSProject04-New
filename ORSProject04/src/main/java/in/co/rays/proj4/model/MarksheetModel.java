@@ -34,7 +34,7 @@ public class MarksheetModel extends BaseModel<MarksheetBean> {
             throw new ApplicationException("Student does not exist");
         }
 
-        bean.setName(sbean.getFirstName() + " " + sbean.getLastName());
+       // bean.setName(sbean.getFirstName() + " " + sbean.getLastName());
 
         try {
             conn = JDBCDataSource.getConnection();
