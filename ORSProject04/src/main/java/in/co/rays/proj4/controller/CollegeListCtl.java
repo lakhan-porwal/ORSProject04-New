@@ -10,7 +10,16 @@ public class CollegeListCtl extends BaseListCtl<CollegeBean, CollegeModel> {
 
 	@Override
 	public CollegeBean populateBean(HttpServletRequest request) {
-		return super.populateBean(request);
+
+		CollegeBean bean = new CollegeBean();
+
+		bean.setName(request.getParameter("name"));
+		bean.setAddress(request.getParameter("address"));
+		bean.setState(request.getParameter("state"));
+		bean.setCity(request.getParameter("city"));
+		bean.setPhoneNo(request.getParameter("phoneNo"));
+
+		return bean;
 	}
 
 	@Override

@@ -10,7 +10,14 @@ public class SubjectListCtl extends BaseListCtl<SubjectBean, SubjectModel> {
 
 	@Override
 	public SubjectBean populateBean(HttpServletRequest request) {
-		return super.populateBean(request);
+
+		SubjectBean bean = new SubjectBean();
+
+		bean.setName(request.getParameter("name"));
+		bean.setDescription(request.getParameter("description"));
+		bean.setCourseId(Long.parseLong(request.getParameter("courseId")));
+
+		return bean;
 	}
 
 	@Override

@@ -10,7 +10,14 @@ public class CourseListCtl extends BaseListCtl<CourseBean, CourseModel> {
 
 	@Override
 	public CourseBean populateBean(HttpServletRequest request) {
-		return super.populateBean(request);
+
+		CourseBean bean = new CourseBean();
+
+		bean.setName(request.getParameter("name"));
+		bean.setDescription(request.getParameter("description"));
+		bean.setDuration(request.getParameter("duration"));
+
+		return bean;
 	}
 
 	@Override
