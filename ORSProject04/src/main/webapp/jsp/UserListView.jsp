@@ -17,6 +17,7 @@
 	int pageSize = ServletUtility.getPageSize(request);
 	int index = (pageNo - 1) * pageSize + 1;
 	Iterator<UserBean> it = list.iterator();
+	List<UserBean> nextList = (List<UserBean>) request.getAttribute("nextList");
 	%>
 
 	<%@ include file="Header.jsp"%>
@@ -73,6 +74,24 @@
 				<%
 				}
 				%>
+
+			</table>
+
+			<table width="100%">
+
+				<tr>
+
+					<th></th>
+					<td><input type="submit" name="operation"
+						<%=pageNo == 1 ? "disabled" : ""%>
+						value="<%=UserListCtl.OP_PREVIOUS%>"></td>
+					<th></th>
+					<td align="right"><input type="submit" name="operation"
+						<%=nextList.size() == 0 ? "disabled" : ""%>
+						value="<%=UserListCtl.OP_NEXT%>"></td>
+
+				</tr>
+
 
 			</table>
 

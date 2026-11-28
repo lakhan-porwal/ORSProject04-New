@@ -13,6 +13,7 @@
 
 	<%
 	List<RoleBean> list = ServletUtility.getList(request);
+	List<RoleBean> nextList = (List<RoleBean>) request.getAttribute("nextList");
 	int pageNo = ServletUtility.getPageNo(request);
 	int pageSize = ServletUtility.getPageSize(request);
 	int index = (pageNo - 1) * pageSize + 1;
@@ -65,6 +66,24 @@
 				<%
 				}
 				%>
+
+			</table>
+
+			<table width="100%">
+
+				<tr>
+
+					<th></th>
+					<td><input type="submit" name="operation"
+						<%=pageNo == 1 ? "disabled" : ""%>
+						value="<%=RoleListCtl.OP_PREVIOUS%>"></td>
+					<th></th>
+					<td align="right"><input type="submit" name="operation"
+						<%=nextList.size() == 0 ? "disabled" : ""%>
+						value="<%=RoleListCtl.OP_NEXT%>"></td>
+
+				</tr>
+
 
 			</table>
 

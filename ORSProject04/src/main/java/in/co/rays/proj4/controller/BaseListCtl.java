@@ -14,56 +14,69 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public abstract class BaseListCtl<B extends BaseBean, M extends BaseModel> extends BaseCtl<B, M> {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        M model = getModel();
-        B bean = populateBean(request);
+		M model = getModel();
+		B bean = populateBean(request);
 
-        int pageNo = 1;
-        int pageSize = 5;
+		int pageNo = 1;
+		int pageSize = 5;
 
-        List<B> list = model.search(bean, pageNo, pageSize);
-        
-        System.out.println("LIST FROM DATABASE = " + list);
+		List<B> list = model.search(bean, pageNo, pageSize);
+		List<B> nextList = model.search(bean, pageNo + 1, pageSize);
 
-        ServletUtility.setPageNo(pageNo, request);
-        ServletUtility.setPageSize(pageSize, request);
-        ServletUtility.setList(list, request);
-        
-        System.out.println("LIST SET IN REQUEST = " + request.getAttribute("list"));
+		System.out.println("LIST FROM DATABASE = " + list);
 
-        ServletUtility.forward(getView(), request, response);
-    }
+		ServletUtility.setPageNo(pageNo, request);
+		ServletUtility.setPageSize(pageSize, request);
+		ServletUtility.setList(list, request);
+		request.setAttribute("nextList", nextList);
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+		System.out.println("LIST SET IN REQUEST = " + request.getAttribute("list"));
 
-        String op = DataUtility.getString(request.getParameter("operation"));
-        int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
-        int pageSize = 5;
+		ServletUtility.forward(getView(), request, response);
+	}
 
-        BaseBean bean = populateBean(request);
-        M model = getModel();
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        pageNo = (pageNo == 0) ? 1 : pageNo;
+		String op = DataUtility.getString(request.getParameter("operation"));
+		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
+		int pageSize = 5;
 
-        if (OP_SEARCH.equalsIgnoreCase(op)) {
-            pageNo = 1;
-        }
+		BaseBean bean = populateBean(request);
+		M model = getModel();
 
-        List<B> list = model.search(bean, pageNo, pageSize);
+		pageNo = (pageNo == 0) ? 1 : pageNo;
 
-        ServletUtility.setList(list, request);
-        ServletUtility.setPageNo(pageNo, request);
-        ServletUtility.setPageSize(pageSize, request);
+		if (OP_SEARCH.equalsIgnoreCase(op)) {
+			pageNo = 1;
+		}
 
-        if (list == null || list.size() == 0) {
-            ServletUtility.setErrorMessage("No record found ", request);
-        }
+		if (OP_PREVIOUS.equalsIgnoreCase(op)) {
+			pageNo--;
+		}
 
-        ServletUtility.forward(getView(), request, response);
-    }
+		if (OP_NEXT.equalsIgnoreCase(op)) {
+			pageNo++;
+		}
+
+		List<B> list = model.search(bean, pageNo, pageSize);
+		List<B> nextList = model.search(bean, pageNo + 1, pageSize);
+
+
+		ServletUtility.setList(list, request);
+		ServletUtility.setPageNo(pageNo, request);
+		ServletUtility.setPageSize(pageSize, request);
+		request.setAttribute("nextList", nextList);
+
+		if (list == null || list.size() == 0) {
+			ServletUtility.setErrorMessage("No record found ", request);
+		}
+
+		ServletUtility.forward(getView(), request, response);
+	}
 }
